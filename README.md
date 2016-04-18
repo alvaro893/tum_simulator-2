@@ -26,7 +26,8 @@ How to install the simulator:
 
     ```
     git clone https://github.com/AutonomyLab/ardrone_autonomy.git	# The AR.Drone ROS driver
-    git clone https://github.com/occomco/tum_simulator.git
+    git clone https://github.com/alvaro893/tum_simulator-2.git
+    svn checkout https://svncvpr.informatik.tu-muenchen.de/cvpr-ros-pkg/trunk/ardrone_helpers # ps3 controller driver
     cd ..
     rosdep install --from-paths src --ignore-src --rosdistro indigo -y
     ```
@@ -42,8 +43,24 @@ How to install the simulator:
     ```
 How to run a simulation:
 
-1. Run a simulation by executing a launch file in cvg_sim_gazebo package:
+5. Run a simulation by executing a launch file in cvg_sim_gazebo package:
 
     ```
     roslaunch cvg_sim_gazebo ardrone_testworld.launch
     ```
+6. PS3 joystick control
+    ```
+    roslaunch ardrone_joystick teleop.launch
+    ```
+7. Terminal control
+    - Take off:
+    ```
+    rostopic pub -1 /ardrone/takeoff std_msgs/Empty
+    ```
+    - Motion:
+    ```
+    rostopic pub -r 10 /cmd_vel geometry_msgs/Twist  '{linear:  {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'
+    ```
+    - [more info](http://wiki.ros.org/tum_simulator#Manual_control)
+    
+
